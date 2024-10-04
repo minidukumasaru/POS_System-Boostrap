@@ -1,0 +1,114 @@
+.itempage {
+    background-color: #343a40; /* Dark background */
+    padding: 10px;
+}
+
+.nav-pills .nav-link {
+    color: white; /* White text color */
+}
+
+.nav-pills .nav-link:hover {
+    background-color: #fd7e14; /* Orange hover effect */
+    color: white;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #fd7e14; /* Active link style */
+    color: white;
+}
+
+.nav-item {
+    margin-right: 15px; /* Space between items */
+}
+#background{
+    width: 98vw;
+    height: 835px;
+    background-color: #FBDAB3;
+    border-radius: 20px;
+    position: absolute;
+    top: 70px;
+    left: 20px;
+}
+.container {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 70%;
+    height: 80%;
+}
+.mainDiv {
+    position: absolute;
+    top: 5px;
+    width: 100%;
+    height: 100%;
+}
+#formInfo {
+    display: flex;
+}
+.searchItemCard {
+    width: 60%;
+    margin-bottom: 15px;
+}
+
+#searchItemCardTitle {
+    background: #2ecc71;
+    color: white;
+}
+
+#searchBtnDiv {
+    display: flex;
+}
+
+#searchBtnDiv > select {
+    width: 200px;
+}
+
+#crudBtn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.saveViewBtns {
+    position: relative;
+}
+
+#customer_btn button {
+    margin-right: 10px;
+}
+
+.saveViewBtns {
+    position: absolute;
+    top: 10px;
+    left: 76%;
+    margin: 2px;
+}
+#formInfo > h2 {
+    margin-top: -50px;
+    margin-left: 10px;
+}
+
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+
+}
+.table td {
+    border: 1px solid #c8e8da;
+    padding: 8px;
+}
+.table-info th {
+    background-color: #ceeee0;
+    color: #333;
+    font-weight: bold;
+}
+.table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table tr:hover {
+    background-color: #f2f2f2;
+}
