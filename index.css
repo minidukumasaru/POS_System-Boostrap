@@ -21,12 +21,3 @@
 .nav-item {
     margin-right: 15px; /* Space between items */
 }
-div{
-    width: 98vw;
-    height: 835px;
-    background-color: #FBDAB3;
-    border-radius: 20px;
-    position: absolute;
-   top: 70px;
-    left: 20px;
-}
