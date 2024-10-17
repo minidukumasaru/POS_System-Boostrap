@@ -1,0 +1,41 @@
+.homepage {
+    background-color: #343a40; /* Dark background */
+    padding: 10px;
+}
+.nav-pills .nav-link {
+    color: white; /* White text color */
+}
+
+.nav-pills .nav-link:hover {
+    background-color: #fd7e14; /* Orange hover effect */
+    color: white;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #fd7e14; /* Active link style */
+    color: white;
+}
+
+.nav-item {
+    margin-right: 15px; /* Space between items */
+}
+
+/*.card {*/
+/*    height: 150px; !* Adjust this value as needed *!*/
+/*    background-color: #f8f9fa; !* Light gray background *!*/
+/*    border: 2px solid #fd7e14; !* Border color matching your theme *!*/
+/*}*/
+
+/*.card-title {*/
+/*    color: #fd7e14; !* Title color *!*/
+/*}*/
+
+/*.card-text {*/
+/*    font-size: 24px; !* Increase font size for better visibility *!*/
+/*    font-weight: bold; !* Make count bold *!*/
+/*}*/
+
+/*.card:hover {*/
+/*    background-color: #ffeeba; !* Light yellow on hover *!*/
+/*    transition: background-color 0.3s; !* Smooth transition *!*/
+/*}*/
