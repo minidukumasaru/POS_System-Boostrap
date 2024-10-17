@@ -20,28 +20,3 @@
 .nav-item {
     margin-right: 15px; /* Space between items */
 }
-#background{
-    width: 98vw;
-    height: 835px;
-    background-color: #FBDAB3;
-    border-radius: 20px;
-    position: absolute;
-    top: 70px;
-    left: 20px;
-}
-.header {
-    font-weight: bold;
-    font-size: 27px;
-    left: 1000px;
-    margin-left: 400px;
-    margin-top: 30px;
-}
-.order_container {
-    background-color: #fcfbfb;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 70px;
-    margin-bottom: 10px;
-    height: 600px;
-}
