@@ -4,10 +4,9 @@ import CustomerModel from "../model/customerModel.js";
 const loadCustomerTable = () =>{
     $("#customerTableBody").empty();
     customer_array.map((cus_object,index) =>{
-        console.log(cus_object);
         let data=`<tr>
-            <td>${cus_object.customer_id}</td
-            ><td>${cus_object.fullname}</td>
+            <td>${cus_object.customer_id}</td>
+            <td>${cus_object.fullname}</td>
             <td>${cus_object.address}</td>
             <td>${cus_object.contact}</td>
             </tr>`
@@ -26,6 +25,7 @@ const  validatemobile = (mobile) =>{
 }
 let selected_customer_index = null;
 
+// Customer Save
 $("#customerSaveButton").on("click",function (){
     console.log("click customer save btn");
     let customer_id = $('#customerId').val();
@@ -63,13 +63,12 @@ $("#customerSaveButton").on("click",function (){
         console.log("address" , address);
         console.log("contact" , contact);
 
+
         let customer = new CustomerModel(
-            customer_array.length+1,
             customer_id,
             fullname,
             address,
             contact);
-
 
         customer_array.push(customer);
         Swal.fire({
@@ -83,3 +82,96 @@ $("#customerSaveButton").on("click",function (){
         loadCustomerTable();
     }
 });
+
+$('#customerTableBody').on('click','tr',function (){
+    let index = $(this).index();
+    selected_customer_index = index;
+
+    let cus_object = customer_array[index];
+
+    let customer_id = cus_object.customer_id;
+    let fullname = cus_object.fullname;
+    let address = cus_object.address;
+    let contact = cus_object.contact;
+
+    $('#customerId').val(customer_id);
+    $('#fullname').val(fullname);
+    $('#address').val(address);
+    $('#contact').val(contact);
+})
+
+// Customer Delete
+$('#customerUpdateButton').on('click',function (){
+
+    Swal.fire({
+        title: "Do you want to save the changes?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Save",
+        denyButtonText: `Don't save`
+    })
+    .then((result) =>{
+        if(result.isConfirmed){
+            let customer_id = $('#customerId').val();
+            let fullname = $('#fullname').val();
+            let address = $('#address').val();
+            let contact = $('#contact').val();
+
+            let index = selected_customer_index;
+
+            let customer = new CustomerModel(
+                customer_id,
+                fullname,
+                address,
+                contact
+            );
+            customer_array[selected_customer_index] = customer;
+
+            clearCustomerForm();
+            loadCustomerTable();
+            Swal.fire("Saved!", "", "success");
+        }else if(result.isDenied){
+            Swal.fire("Changes are not saved", "", "info");
+        }
+    });
+})
+
+// Customer Delete
+$('#customerDeleteButton').on('click',function (){
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            customer_array.splice(selected_customer_index, 1);
+
+            clearCustomerForm()
+            loadCustomerTable()
+            swalWithBootstrapButtons.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success"
+            });
+        } else if (
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire({
+                title: "Cancelled",
+                text: "Your imaginary file is safe :)",
+                icon: "error"
+            });
+        }
+    });
+})
