@@ -1,4 +1,5 @@
-let customer_array = [];
+import {customer_array} from "../db/database.js";
+import CustomerModel from "../model/customerModel.js";
 
 const loadCustomerTable = () =>{
     $("#customerTableBody").empty();
@@ -13,6 +14,17 @@ const loadCustomerTable = () =>{
         $("#customerTableBody").append(data);
     })
 }
+const clearCustomerForm = () =>{
+    $('#customerId').val("");
+    $('#fullname').val("");
+    $('#address').val("");
+    $('#contact').val("");
+}
+const  validatemobile = (mobile) =>{
+    const sriLankanMobileRegex = /^(?:\+94|0)?7[0-9]{8}$/;
+    return sriLankanMobileRegex.test(mobile)
+}
+let selected_customer_index = null;
 
 $("#customerSaveButton").on("click",function (){
     console.log("click customer save btn");
@@ -21,19 +33,53 @@ $("#customerSaveButton").on("click",function (){
     let address = $('#address').val();
     let contact = $('#contact').val();
 
-    console.log("customerId" , customer_id);
-    console.log("fullname" , fullname);
-    console.log("address" , address);
-    console.log("contact" , contact);
+    if (customer_id.length===0){
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Invalid Customer-Id!",
+        });
+    }else if(fullname.length===0){
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Invalid Name!",
+        });
+    }else if (address.length===0){
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Invalid Address!",
+        });
+    }else if (!validatemobile(contact)){
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Invalid Contact!",
+        });
+    }else{
+        console.log("customerId" , customer_id);
+        console.log("fullname" , fullname);
+        console.log("address" , address);
+        console.log("contact" , contact);
 
-    let customer = {
-        id:customer_array.length+1,
-        customer_id: customer_id,
-        fullname: fullname,
-        address:address,
-        contact:contact,
-    };
+        let customer = new CustomerModel(
+            customer_array.length+1,
+            customer_id,
+            fullname,
+            address,
+            contact);
 
-    customer_array.push(customer);
-    loadCustomerTable();
+
+        customer_array.push(customer);
+        Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Customer Save Successful",
+            showConfirmButton: false,
+            timer: 1500
+        });
+        clearCustomerForm();
+        loadCustomerTable();
+    }
 });
