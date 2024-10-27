@@ -1,4 +1,5 @@
-let item_array = [];
+import ItemModel from "../model/itemModel.js";
+import {item_array} from "../db/database.js";
 
 const loadItemTable = () =>{
     $("#itemTableBody").empty();
@@ -14,6 +15,14 @@ const loadItemTable = () =>{
     })
 }
 
+const cleanItemForm  = () => {
+    $('#itemId').val("");
+    $('#itemName').val("")
+    $('#Quantity').val("");
+    $('#UnitPrice').val("");
+}
+let selected_item_index = null;
+
 $("#itemSaveButton").on("click",function (){
     console.log("click item save btn");
     let itemId = $('#itemId').val();
@@ -21,19 +30,59 @@ $("#itemSaveButton").on("click",function (){
     let Quantity = $('#Quantity').val();
     let UnitPrice = $('#UnitPrice').val();
 
-    console.log("itemId" , itemId);
-    console.log("itemName" , itemName);
-    console.log("Quantity" , Quantity);
-    console.log("UnitPrice" , UnitPrice);
+    if(itemId.length===0){
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Invalid Item Id!",
+        });
+    }else if(itemName.length===0){
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Invalid Item Name!",
+        });
+    }else if(Quantity.length===0){
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Invalid Quantity!",
+        });
+    }else if(UnitPrice.length===0){
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Invalid UnitPrice!",
+        });
+    }else{
 
-    let item = {
-        id:item_array.length+1,
-        itemId: itemId,
-        itemName: itemName,
-        Quantity:Quantity,
-        UnitPrice:UnitPrice,
-    };
+        let item = new ItemModel(
+            itemId,
+            itemName,
+            Quantity,
+            UnitPrice
+        );
 
-    item_array.push(item);
-    loadItemTable();
+        item_array.push(item);
+        cleanItemForm()
+        loadItemTable();
+    }
 });
+
+$('#itemTableBody').on('click','tr',function (){
+    let index = $(this).index();
+
+    selected_item_index = index;
+
+    let item_obj = item_array[index];
+
+    let itemId = item_obj.itemId;
+    let itemName = item_obj.itemName;
+    let Quantity = item_obj.Quantity;
+    let UnitPrice = item_obj.UnitPrice;
+
+    $('#itemId').val(itemId);
+    $('#itemName').val(itemName);
+    $('#Quantity').val(Quantity);
+    $('#UnitPrice').val(UnitPrice);
+})
