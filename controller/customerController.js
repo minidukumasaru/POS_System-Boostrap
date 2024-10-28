@@ -33,6 +33,7 @@ const  validateEmail = (email) =>{
 }
 let selected_customer_index = null;
 
+
 // Customer Save
 $("#customerSaveButton").on("click",function (){
     console.log("click customer save btn");
