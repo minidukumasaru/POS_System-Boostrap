@@ -1,9 +1,18 @@
 export default class ItemModel{
-    constructor(itemId,itemName,Quantity,UnitPrice) {
+    constructor(itemId,itemName,Quantity,UnitPrice,Description) {
         this._itemId = itemId;
         this._itemName =itemName;
         this._Quantity = Quantity;
         this._UnitPrice = UnitPrice;
+        this._Description = Description;
+    }
+
+    get Description() {
+        return this._Description;
+    }
+
+    set Description(value) {
+        this._Description = value;
     }
 
     get itemId() {

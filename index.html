@@ -102,12 +102,20 @@
                                     <input type="text" class="form-control" id="customerId">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="fullname" class="form-label">Customer Full Name</label>
-                                    <input type="text" class="form-control" id="fullname">
+                                    <label for="firstName" class="form-label">Customer First Name</label>
+                                    <input type="text" class="form-control" id="firstName">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="lastName" class="form-label">Customer Last Name</label>
+                                    <input type="text" class="form-control" id="lastName">
                                 </div>
                                 <div class="mb-3">
                                     <label for="address" class="form-label">Customer Address</label>
                                     <textarea class="form-control" id="address" style="height: 65px"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="text" class="form-control" id="email">
                                 </div>
                                 <div class="mb-3">
                                     <label for="contact" class="form-label">Customer Contact No</label>
@@ -137,8 +145,10 @@
                                 <thead>
                                 <tr class="table-info">
                                     <th scope="col">Id</th>
-                                    <th scope="col">Name</th>
+                                    <th scope="col">First-Name</th>
+                                    <th scope="col">Last-Name</th>
                                     <th scope="col">Address</th>
+                                    <th scope="col">Email</th>
                                     <th scope="col">Contact</th>
                                 </tr>
                                 </thead>
@@ -184,11 +194,15 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="Quantity" class="form-label">Quantity</label>
-                                    <textarea class="form-control" id="Quantity" style="height: 65px"></textarea>
+                                    <input type="text" class="form-control" id="Quantity">
                                 </div>
                                 <div class="mb-3">
                                     <label for="UnitPrice" class="form-label">Unit Price</label>
                                     <input type="text" class="form-control" id="UnitPrice">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="Description" class="form-label">Description</label>
+                                    <textarea class="form-control" id="Description" style="height: 65px"></textarea>
                                 </div>
                                 <div id="item_btn" class="mt-5">
                                     <button type="button" class="btn btn-success" id="itemSaveButton">Save</button>
@@ -217,6 +231,7 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Unit Price</th>
+                                    <th scope="col">Description</th>
                                 </tr>
                                 </thead>
                                 <tbody id="itemTableBody">

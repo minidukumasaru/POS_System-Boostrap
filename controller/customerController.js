@@ -6,8 +6,10 @@ const loadCustomerTable = () =>{
     customer_array.map((cus_object,index) =>{
         let data=`<tr>
             <td>${cus_object.customer_id}</td>
-            <td>${cus_object.fullname}</td>
+            <td>${cus_object.firstname}</td>
+            <td>${cus_object.lastname}</td>
             <td>${cus_object.address}</td>
+            <td>${cus_object.email}</td>
             <td>${cus_object.contact}</td>
             </tr>`
         $("#customerTableBody").append(data);
@@ -15,13 +17,19 @@ const loadCustomerTable = () =>{
 }
 const clearCustomerForm = () =>{
     $('#customerId').val("");
-    $('#fullname').val("");
+    $('#firstName').val("");
+    $('#lastName').val("");
     $('#address').val("");
+    $('#email').val("");
     $('#contact').val("");
 }
 const  validatemobile = (mobile) =>{
     const sriLankanMobileRegex = /^(?:\+94|0)?7[0-9]{8}$/;
     return sriLankanMobileRegex.test(mobile)
+}
+const  validateEmail = (email) =>{
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email)
 }
 let selected_customer_index = null;
 
@@ -29,8 +37,10 @@ let selected_customer_index = null;
 $("#customerSaveButton").on("click",function (){
     console.log("click customer save btn");
     let customer_id = $('#customerId').val();
-    let fullname = $('#fullname').val();
+    let firstname = $('#firstName').val();
+    let lastname = $('#lastName').val();
     let address = $('#address').val();
+    let email = $('#email').val();
     let contact = $('#contact').val();
 
     if (customer_id.length===0){
@@ -39,17 +49,29 @@ $("#customerSaveButton").on("click",function (){
             title: "Oops...",
             text: "Invalid Customer-Id!",
         });
-    }else if(fullname.length===0){
+    }else if(firstname.length===0){
         Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Invalid Name!",
+            text: "Invalid First-Name!",
+        });
+    }else if(lastname.length===0){
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Invalid Last-Name!",
         });
     }else if (address.length===0){
         Swal.fire({
             icon: "error",
             title: "Oops...",
             text: "Invalid Address!",
+        });
+    }else if(!validateEmail(email)){
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Invalid Email!",
         });
     }else if (!validatemobile(contact)){
         Swal.fire({
@@ -59,15 +81,19 @@ $("#customerSaveButton").on("click",function (){
         });
     }else{
         console.log("customerId" , customer_id);
-        console.log("fullname" , fullname);
+        console.log("firstname" , firstname);
+        console.log("lastname" , lastname);
         console.log("address" , address);
+        console.log("email" , email);
         console.log("contact" , contact);
 
 
         let customer = new CustomerModel(
             customer_id,
-            fullname,
+            firstname,
+            lastname,
             address,
+            email,
             contact);
 
         customer_array.push(customer);
@@ -90,17 +116,21 @@ $('#customerTableBody').on('click','tr',function (){
     let cus_object = customer_array[index];
 
     let customer_id = cus_object.customer_id;
-    let fullname = cus_object.fullname;
+    let firstname = cus_object.firstname;
+    let lastname = cus_object.lastname;
     let address = cus_object.address;
+    let email = cus_object.email;
     let contact = cus_object.contact;
 
     $('#customerId').val(customer_id);
-    $('#fullname').val(fullname);
+    $('#firstName').val(firstname);
+    $('#lastName').val(lastname);
     $('#address').val(address);
+    $('#email').val(email);
     $('#contact').val(contact);
 })
 
-// Customer Delete
+// Customer Update
 $('#customerUpdateButton').on('click',function (){
 
     Swal.fire({
@@ -113,16 +143,20 @@ $('#customerUpdateButton').on('click',function (){
     .then((result) =>{
         if(result.isConfirmed){
             let customer_id = $('#customerId').val();
-            let fullname = $('#fullname').val();
+            let firstname = $('#firstName').val();
+            let lastname = $('#lastName').val();
             let address = $('#address').val();
+            let email = $('#email').val();
             let contact = $('#contact').val();
 
             let index = selected_customer_index;
 
             let customer = new CustomerModel(
                 customer_id,
-                fullname,
+                firstname,
+                lastname,
                 address,
+                email,
                 contact
             );
             customer_array[selected_customer_index] = customer;
