@@ -246,129 +246,180 @@
     </section>
 </main>
 
-<main class="Order-form" id="OrderSection">
-    <div class="container mt-5">
-        <!-- Order Form -->
-        <div class="card mb-3" style="max-width: 100%; color: #fd7e14; border: 4px solid black; font-weight: bold; margin-top: 30px">
-            <div class="row g-0">
-                <div class="col-md-4">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title" style="font-size: 35px; text-align: center;" >----Order-Form----</h5>
-                    </div>
+
+<section class="order" id="OrderSection">
+    <div class="card mb-3" style="max-width: 100%; color: #fd7e14; border: 4px solid black; font-weight: bold; margin-top: 30px">
+        <div class="row g-0">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title" style="font-size: 35px; text-align: center;" >----Order-Form----</h5>
                 </div>
             </div>
         </div>
-        <!-- Order Form Starts -->
-        <form>
-            <!-- Order ID and Date -->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="orderId" class="form-label">Order ID</label>
-                    <input type="text" class="form-control" id="orderId" placeholder="Enter Order ID">
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="grid-container">
+                <!-- Invoice Details div-->
+                <div class="card searchCustomerCard">
+                    <div class="card-header" id="searchInvoiceDetailsTitle">
+                        Invoice Details
+                    </div>
+                    <div class="card-body invoiceDetailsInputs">
+                        <div class="mb-3">
+                            <label for="orderID" class="form-label">Order ID</label>
+                            <input type="text" class="form-control" id="orderID" placeholder="Order ID">
+                        </div>
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="date" placeholder="Date">
+                        </div>
+                        <div class="mb-3">
+                            <label for="customerIdSelect" class="form-label">Customer ID</label>
+                            <input type="text" class="form-control" id="customerIdSelect" placeholder="Customer ID">
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Customer Name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="customerAddress" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="customerAddress" placeholder="Customer Address">
+                        </div>
+
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <label for="orderDate" class="form-label">Date</label>
-                    <input type="date" class="form-control" id="orderDate">
+                <!--Item Details div-->
+                <div class="card searchCustomerCard">
+                    <div class="card-header" id="searchCustomerCardTitle">
+                        Invoice Details
+                    </div>
+                    <div class="card-body itemDetailsInputs">
+                        <div id="searchItemId">
+                            <label for="orderItemID" class="form-label">Item Code</label>
+                            <select class="form-select form-select-sm" id="orderItemID" aria-label="Small select example">
+                                <option selected>Item IDs</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="orderItemName" class="form-label">Item Name</label>
+                            <input type="text" class="form-control" id="orderItemName" placeholder="Item Name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="orderItemPrice" class="form-label"> Item Price</label>
+                            <input type="text" class="form-control" id="orderItemPrice" placeholder="Item Unit Price">
+                        </div>
+                        <div class="mb-3">
+                            <label for="itemQty" class="form-label"> Available Qty</label>
+                            <input type="text" class="form-control" id="itemQty" placeholder="Item Qty On Hand">
+                        </div>
+                        <div class="mb-3">
+                            <label for="orderQty" class="form-label">Order Quantity</label>
+                            <input type="text" class="form-control" id="orderQty" placeholder="Order Quantity">
+                        </div>
+                        <div class="mb-3">
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"  data-bs-target="#add-item-modal">ADD Item</button>
+                        </div>
+                    </div>
+                </div>
+                <!--Order Price summery div-->
+                <div class="card searchCustomerCard">
+                    <div class="card-header" id="OrderPriceCardTitle">
+                        Total Price
+                    </div>
+                    <div class="card-body">
+                        <div id="totalPriceDiv" style="display: flex; align-items: center; justify-content: space-between;">
+                            <h2>Total:</h2>
+                            <h2 id="totalAmount">0.00</h2>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cash" class="form-label">Cash</label>
+                            <input type="text" class="form-control" id="cash" placeholder="Cash Amount">
+                        </div>
+                        <div class="mb-3">
+                            <label for="discount" class="form-label">Discount %</label>
+                            <input type="number" class="form-control" id="discount" placeholder="Discount Amount">
+                        </div>
+                        <div class="mb-3">
+                            <label for="balance" class="form-label">Balance</label>
+                            <input type="text" class="form-control" id="balance" placeholder="Balance">
+                        </div>
+                        <div class="mb-3">
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"  data-bs-target="#place-order-modal">Place Order</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- Item ID and Customer ID -->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="itemId" class="form-label">Item ID</label>
-                    <select class="form-select" id="orderitemId">
-                        <option selected disabled>Choose Item</option>
-                        <option value="1">Item 1</option>
-                        <option value="2">Item 2</option>
-                        <option value="3">Item 3</option>
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <label for="customerId" class="form-label">Customer ID</label>
-                    <select class="form-select" id="ordercustomerId">
-                        <option selected disabled>Choose Customer</option>
-                        <option value="C1">Customer 1</option>
-                        <option value="C2">Customer 2</option>
-                        <option value="C3">Customer 3</option>
-                    </select>
-                </div>
-            </div>
-            <!-- Item Name, Unit Price, Quantity, Available Quantity, and Balance -->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="itemName" class="form-label">Item Name</label>
-                    <input type="text" class="form-control" id="orderitemName" placeholder="Enter Item Name">
-                </div>
-                <div class="col-md-6">
-                    <label for="unitPrice" class="form-label">Unit Price</label>
-                    <input type="number" class="form-control" id="orderunitPrice" placeholder="Enter Unit Price">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-4">
-                    <label for="quantity" class="form-label">Quantity</label>
-                    <input type="number" class="form-control" id="orderquantity" placeholder="Enter Quantity">
-                </div>
-                <div class="col-md-4">
-                    <label for="availableQuantity" class="form-label">Available Quantity</label>
-                    <input type="number" class="form-control" id="availableQuantity" placeholder="Enter Available Quantity">
-                </div>
-                <div class="col-md-4">
-                    <label for="balance" class="form-label">Balance</label>
-                    <input type="number" class="form-control" id="balance" placeholder="Enter Balance">
-                </div>
-            </div>
-            <!-- Add to Cart and Place Order Buttons -->
-            <div class="d-flex justify-content-between">
-                <button type="button" class="btn btn-primary">Add to Cart</button>
-                <button type="submit" class="btn btn-success">Place Order</button>
-            </div>
-        </form>
+            <!-- Order details table-->
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr class="table-info">
+                    <th scope="col">Item Code</th>
+                    <th scope="col">Item Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
     </div>
 
+<!--Add Item Modal-->
+<div class="modal" tabindex="-1" id="add-item-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Item</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Confirme Your Action to Add Item</p>
+                <p>Item Code : <span id="itemCodeSpan"></span></p>
+                <p>Item Name : <span id="itemNameSpan"></span></p>
+                <p>Item Price : <span id="itemPriceSpan"></span></p>
+                <p>Item Quantity : <span id="itemQtySpan"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Add Item</button>
+            </div>
+        </div>
 
-    <!-- Order Summary Table -->
-    <div class="container mt-5">
-        <h2>Order Summary</h2>
-        <table class="table table-bordered table-hover">
-            <thead class="table-dark">
-            <tr>
-                <th>Item Name</th>
-                <th>Unit Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Item 1</td>
-                <td>$10.00</td>
-                <td>2</td>
-                <td>$20.00</td>
-            </tr>
-            <tr>
-                <td>Item 2</td>
-                <td>$15.00</td>
-                <td>1</td>
-                <td>$15.00</td>
-            </tr>
-            <tr>
-                <td>Item 3</td>
-                <td>$8.00</td>
-                <td>3</td>
-                <td>$24.00</td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-                <th colspan="3" class="text-end">Grand Total:</th>
-                <th>$.00</th>
-            </tr>
-            </tfoot>
-        </table>
     </div>
-</main>
+</div>
+<!--Place Order Modal-->
+<div class="modal" tabindex="-1" id="place-order-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Item</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6>Confirm your Action to Place your Order</h6><br>
+                <p>Customer Name : <span id="orderCustomerNameSpan"></span></p>
+                <p>Item Code : <span id="orderItemCodeSpan"></span></p>
+                <p>Item Name : <span id="orderItemNameSpan"></span></p>
+                <p>Item Price : <span id="orderItemPriceSpan"></span></p>
+                <p>Item Quantity : <span id="OrderItemQtySpan"></span></p><br>
+                <p>Total Amount : <span id="totalAmountSpan"></span></p>
+                <p>Cash Amount : <span id="cashAmountSpan"></span></p>
+                <p>Discount Amount : <span id="discountAmountSpan"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Add Item</button>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
 
 <main class="Order-Details" id="OrderDetailsSection">
     <!-- order details section -->
