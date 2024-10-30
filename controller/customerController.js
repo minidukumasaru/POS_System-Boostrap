@@ -1,6 +1,6 @@
 import {customer_array} from "../db/database.js";
 import CustomerModel from "../model/customerModel.js";
-
+import {loadCustomers} from "./orderController.js";
 const loadCustomerTable = () =>{
     $("#customerTableBody").empty();
     customer_array.map((cus_object,index) =>{
@@ -33,11 +33,21 @@ const  validateEmail = (email) =>{
 }
 let selected_customer_index = null;
 
+$(document).ready(function (){
+    $("#customerId").val(generateCustomerId());
+})
+let generateCustomerId = function generateCustomerId(){
 
+    let id = customer_array.length + 1;
+    return "C00" + id;
+}
+
+let setCustomerId = () => {
+    $("#customerId").val(generateCustomerId());
+}
 // Customer Save
 $("#customerSaveButton").on("click",function (){
-    console.log("click customer save btn");
-    let customer_id = $('#customerId').val();
+    let customer_id = generateCustomerId();
     let firstname = $('#firstName').val();
     let lastname = $('#lastName').val();
     let address = $('#address').val();
@@ -81,12 +91,6 @@ $("#customerSaveButton").on("click",function (){
             text: "Invalid Contact!",
         });
     }else{
-        console.log("customerId" , customer_id);
-        console.log("firstname" , firstname);
-        console.log("lastname" , lastname);
-        console.log("address" , address);
-        console.log("email" , email);
-        console.log("contact" , contact);
 
 
         let customer = new CustomerModel(
@@ -107,6 +111,8 @@ $("#customerSaveButton").on("click",function (){
         });
         clearCustomerForm();
         loadCustomerTable();
+        loadCustomers();
+        setCustomerId();
     }
 });
 
@@ -164,6 +170,7 @@ $('#customerUpdateButton').on('click',function (){
 
             clearCustomerForm();
             loadCustomerTable();
+            setCustomerId();
             Swal.fire("Saved!", "", "success");
         }else if(result.isDenied){
             Swal.fire("Changes are not saved", "", "info");
@@ -210,3 +217,27 @@ $('#customerDeleteButton').on('click',function (){
         }
     });
 })
+$('#customerSearchBtn').on('click', function () {
+    let searchName = $('#customer_search').val().toLowerCase();
+
+    let filteredCustomers = customer_array.filter(customer =>
+        customer.firstname.toLowerCase().includes(searchName)
+    );
+
+    loadCustomerTable2(filteredCustomers.length ? filteredCustomers : customer_array);
+});
+function loadCustomerTable2(customers) {
+    $('#customerTableBody').empty();
+    customers.forEach(customer => {
+        $('#customerTableBody').append(`
+            <tr>
+                <td>${customer.customer_id}</td>
+                <td>${customer.firstname}</td>
+                <td>${customer.lastname}</td>
+                <td>${customer.address}</td>
+                <td>${customer.email}</td>
+                <td>${customer.contact}</td>
+            </tr>
+        `);
+    });
+}

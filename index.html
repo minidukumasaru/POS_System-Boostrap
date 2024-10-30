@@ -131,15 +131,9 @@
                         </div>
 
                         <div class="col col-lg-6 col-md-12 col-sm-12 col-12">
-                            <div id="customer_search" class="search mb-4 mt-4 d-flex flex-row align-items-end">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                <input type="search" class="form-control" placeholder="Search">
-                                <select class="form-select" aria-label="Default select example">
-                                    <option selected>customer_id</option>
-                                    <option>name</option>
-                                    <option>address</option>
-                                    <option>Contact</option>
-                                </select>
+                            <div class="col-6 col-md-4 searchForm" style="display: flex; column-gap: 50px" >
+                                <input type="text" class="form-control" id="customer_search" aria-describedby="idHelp" placeholder="Customer Name" style="width: 500px">
+                                <button type="button" class="btn btn-warning" id="customerSearchBtn">Search</button>
                             </div>
                             <table class="table table-bordered table-hover">
                                 <thead>
@@ -214,15 +208,9 @@
                         </div>
 
                         <div class="col col-lg-6 col-md-12 col-sm-12 col-12">
-                            <div id="item_search" class="search mb-4 mt-4 d-flex flex-row align-items-end">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                <input type="search" class="form-control" placeholder="Search">
-                                <select class="form-select" aria-label="Default select example">
-                                    <option selected>Item_id</option>
-                                    <option>name</option>
-                                    <option>quantity</option>
-                                    <option>unit_price</option>
-                                </select>
+                            <div class="col-6 col-md-4 searchForm" style="display: flex; column-gap: 50px" >
+                                <input type="text" class="form-control" id="item_search" aria-describedby="idHelp" placeholder="Item Name" style="width: 500px">
+                                <button type="button" class="btn btn-warning" id="itemSearchBtn">Search</button>
                             </div>
                             <table class="table table-bordered table-hover">
                                 <thead>
@@ -276,13 +264,15 @@
                             <label for="date" class="form-label">Date</label>
                             <input type="date" class="form-control" id="date" placeholder="Date">
                         </div>
-                        <div class="mb-3">
-                            <label for="customerIdSelect" class="form-label">Customer ID</label>
-                            <input type="text" class="form-control" id="customerIdSelect" placeholder="Customer ID">
+                        <div id="searchCustomerId">
+                            <label for="orderCustomerID" class="form-label">Customer Code</label>
+                            <select class="form-select form-select-sm" id="orderCustomerID" aria-label="Small select example">
+                                <option selected >Select Customer</option>
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Customer Name">
+                            <label for="customerName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="customerName" placeholder="Customer Name">
                         </div>
                         <div class="mb-3">
                             <label for="customerAddress" class="form-label">Address</label>
@@ -300,27 +290,27 @@
                         <div id="searchItemId">
                             <label for="orderItemID" class="form-label">Item Code</label>
                             <select class="form-select form-select-sm" id="orderItemID" aria-label="Small select example">
-                                <option selected>Item IDs</option>
+                                <option value="" selected disabled>Item IDs</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="orderItemName" class="form-label">Item Name</label>
-                            <input type="text" class="form-control" id="orderItemName" placeholder="Item Name">
+                            <input type="text" class="form-control" id="orderItemName" placeholder="Item Name" >
                         </div>
                         <div class="mb-3">
                             <label for="orderItemPrice" class="form-label"> Item Price</label>
-                            <input type="text" class="form-control" id="orderItemPrice" placeholder="Item Unit Price">
+                            <input type="text" class="form-control" id="orderItemPrice" placeholder="Item Unit Price" >
                         </div>
                         <div class="mb-3">
                             <label for="itemQty" class="form-label"> Available Qty</label>
-                            <input type="text" class="form-control" id="itemQty" placeholder="Item Qty On Hand">
+                            <input type="text" class="form-control" id="itemQty" placeholder="Item Qty On Hand" >
                         </div>
                         <div class="mb-3">
                             <label for="orderQty" class="form-label">Order Quantity</label>
                             <input type="text" class="form-control" id="orderQty" placeholder="Order Quantity">
                         </div>
                         <div class="mb-3">
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"  data-bs-target="#add-item-modal">ADD Item</button>
+                            <button type="button" class="btn btn-danger" id="addItemButton">ADD Item</button>
                         </div>
                     </div>
                 </div>
@@ -331,7 +321,7 @@
                     </div>
                     <div class="card-body">
                         <div id="totalPriceDiv" style="display: flex; align-items: center; justify-content: space-between;">
-                            <h2>Total:</h2>
+                            <h1 >Total:</h1>
                             <h2 id="totalAmount">0.00</h2>
                         </div>
                         <div class="mb-3">
@@ -347,8 +337,12 @@
                             <input type="text" class="form-control" id="balance" placeholder="Balance">
                         </div>
                         <div class="mb-3">
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal"  data-bs-target="#place-order-modal">Place Order</button>
+                            <button type="button" class="btn btn-primary" id="getBalance" style="left: 100px">get Balance</button>
                         </div>
+                        <div class="mb-3">
+                            <button type="button" class="btn btn-success" id="placeOrderButton">Place Order</button>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -358,67 +352,17 @@
                 <tr class="table-info">
                     <th scope="col">Item Code</th>
                     <th scope="col">Item Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Price</th>
+                    <th scope="col">Item Price</th>
+                    <th scope="col">Order Quantity</th>
+                    <th scope="col">Total Price</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="orderItemTableBody">
 
                 </tbody>
             </table>
         </div>
     </div>
-
-<!--Add Item Modal-->
-<div class="modal" tabindex="-1" id="add-item-modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Add Item</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Confirme Your Action to Add Item</p>
-                <p>Item Code : <span id="itemCodeSpan"></span></p>
-                <p>Item Name : <span id="itemNameSpan"></span></p>
-                <p>Item Price : <span id="itemPriceSpan"></span></p>
-                <p>Item Quantity : <span id="itemQtySpan"></span></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Add Item</button>
-            </div>
-        </div>
-
-    </div>
-</div>
-<!--Place Order Modal-->
-<div class="modal" tabindex="-1" id="place-order-modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Add Item</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <h6>Confirm your Action to Place your Order</h6><br>
-                <p>Customer Name : <span id="orderCustomerNameSpan"></span></p>
-                <p>Item Code : <span id="orderItemCodeSpan"></span></p>
-                <p>Item Name : <span id="orderItemNameSpan"></span></p>
-                <p>Item Price : <span id="orderItemPriceSpan"></span></p>
-                <p>Item Quantity : <span id="OrderItemQtySpan"></span></p><br>
-                <p>Total Amount : <span id="totalAmountSpan"></span></p>
-                <p>Cash Amount : <span id="cashAmountSpan"></span></p>
-                <p>Discount Amount : <span id="discountAmountSpan"></span></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Add Item</button>
-            </div>
-        </div>
-    </div>
-</div>
 </section>
 
 <main class="Order-Details" id="OrderDetailsSection">
@@ -438,65 +382,28 @@
                     </div>
                 </div>
             </div>
-            <div class="order_container">
-                <div class="row">
-                    <div class="col col-lg-6 col-md-12 col-sm-12 col-12">
-                        <form>
-                            <div class="mb-3">
-                                <label for="order_detail_id" class="form-label">Order Id</label>
-                                <input type="text" class="form-control" id="order_detail_id">
-                            </div>
-                            <div class="mb-3">
-                                <label for="order_detail_customer_id" class="form-label">Customer Id</label>
-                                <input type="text" class="form-control" id="order_detail_customer_id">
-                            </div>
-                            <div class="mb-3">
-                                <label for="order_details_date" class="form-label">Order Date</label>
-                                <input type="date" class="form-control" id="order_details_date">
-                            </div>
-                            <div class="mb-3">
-                                <label for="order_details_discount" class="form-label">Discount</label>
-                                <input type="text" class="form-control" id="order_details_discount">
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="col col-lg-6 col-md-12 col-sm-12 col-12">
-                        <div id="order_detail_search" class="search mb-4 mt-4 d-flex flex-row align-items-end">
-                            <input type="search" class="form-control" placeholder="Search">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>orderId</option>
-                                <option>customerId</option>
-                            </select>
-                        </div>
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th scope="col">Order Id</th>
-                                <th scope="col">Customer Id</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Total</th>
-                            </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
+            <div class="col-6 col-md-4 searchForm" style="display: flex; column-gap: 50px" >
+                <input type="text" class="form-control" id="order_search" aria-describedby="idHelp" placeholder="order" style="width: 500px">
+                <button type="button" class="btn btn-warning" id="orderSearchBtn">Search</button>
             </div>
-
             <div class="order_container mt-3">
-                <div class="row">
-                    <table class="table table-hover">
-                        <thead>
+                <div class="col table1">
+                    <table class="table" id="item-details-table">
+                        <thead class="table-primary">
                         <tr>
-                            <th scope="col">Item Id</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Unit Price</th>
-                            <th scope="col">Qty</th>
+                            <th scope="col">Order-Id</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Customer-Id</th>
+                            <th scope="col">Item-Id</th>
+                            <th scope="col">Order-Qty</th>
                             <th scope="col">Total</th>
+                            <th scope="col">Cash</th>
+                            <th scope="col">Discount</th>
+                            <th scope="col">Balance</th>
                         </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody id="orderDetailsTable">
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -551,6 +458,7 @@
     })
 
 </script>
+<script type="module" src="controller/orderController.js"></script>
 <script type="module" src="controller/customerController.js"></script>
 <script type="module" src="controller/itemController.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

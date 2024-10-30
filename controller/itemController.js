@@ -1,10 +1,10 @@
 import ItemModel from "../model/itemModel.js";
 import { item_array} from "../db/database.js";
+import {loadItems} from "./orderController.js";
 
 const loadItemTable = () =>{
     $("#itemTableBody").empty();
     item_array.map((item_object,index) =>{
-        console.log(item_object);
         let data=`<tr>
             <td>${item_object.itemId}</td
             ><td>${item_object.itemName}</td>
@@ -24,9 +24,21 @@ const clearItemForm  = () => {
     $('#Description').val("");
 }
 let selected_item_index = null;
+$(document).ready(function (){
+    $("#itemId").val(generateItemCode());
+})
+
+let generateItemCode = function generateItemCode(){
+
+    let id = item_array.length + 1;
+    return "I00" + id;
+}
+
+let setItemCode = () => {
+    $("#itemId").val(generateItemCode());
+}
 
 $("#itemSaveButton").on("click",function (){
-    console.log("click item save btn");
     let itemId = $('#itemId').val();
     let itemName = $('#itemName').val();
     let Quantity = $('#Quantity').val();
@@ -75,7 +87,7 @@ $("#itemSaveButton").on("click",function (){
 
         item_array.push(item);
         Swal.fire({
-            position: "top-center",
+            position: "top-end",
             icon: "success",
             title: "Item Save Successful",
             showConfirmButton: false,
@@ -83,7 +95,10 @@ $("#itemSaveButton").on("click",function (){
         });
         clearItemForm()
         loadItemTable();
+        loadItems();
+        setItemCode();
     }
+
 });
 
 $('#itemTableBody').on('click','tr',function (){
@@ -138,6 +153,7 @@ $('#itemUpdateButton').on('click',function (){
 
                 clearItemForm();
                 loadItemTable();
+                setItemCode();
                 Swal.fire("Saved!", "", "success");
             }else if(result.isDenied){
                 Swal.fire("Changes are not saved", "", "info");
@@ -183,4 +199,36 @@ $('#itemDeleteButton').on('click',function (){
         }
     });
 })
+
+$('#itemSearchBtn').on('click', function () {
+
+    let searchItem = $('#item_search').val().toLowerCase();
+
+    let filteredItems = item_array.filter(item =>
+        item.itemName.toLowerCase().includes(searchItem)
+    );
+
+    loadItemTable2(filteredItems.length ? filteredItems : item_array);
+});
+
+
+//LOAD ITEMS WHEN SEARCHING
+
+function loadItemTable2(items) {
+
+    $('#itemTableBody').empty();
+
+    items.forEach(item => {
+        $('#itemTableBody').append(`
+            <tr>
+                <td>${item.itemId}</td>
+                <td>${item.itemName}</td>
+                <td>${item.Quantity}</td>
+                <td>${item.UnitPrice}</td>
+                <td>${item.Description}</td>
+             </tr>
+        `);
+    });
+
+}
 
