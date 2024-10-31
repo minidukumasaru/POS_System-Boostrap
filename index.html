@@ -26,12 +26,6 @@
     <li class="nav-item">
         <a class="nav-link " id="orderDetails_nav" >ORDER DETAILS</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link " id="user_nav" >USER</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link " id="log_out" >Log Out</a>
-    </li>
 </ul>
 
 </section>
@@ -383,7 +377,7 @@
                 </div>
             </div>
             <div class="col-6 col-md-4 searchForm" style="display: flex; column-gap: 50px" >
-                <input type="text" class="form-control" id="order_search" aria-describedby="idHelp" placeholder="order" style="width: 500px">
+                <input type="text" class="form-control" id="order_search" aria-describedby="idHelp" placeholder="Order-ID/Customer-ID" style="width: 500px">
                 <button type="button" class="btn btn-warning" id="orderSearchBtn">Search</button>
             </div>
             <div class="order_container mt-3">
@@ -402,7 +396,7 @@
                             <th scope="col">Balance</th>
                         </tr>
                         </thead>
-                        <tbody id="orderDetailsTable">
+                        <tbody id="orderDetailsTableBody">
                         </tbody>
                     </table>
                 </div>
@@ -458,6 +452,7 @@
     })
 
 </script>
+<script type="module" src="controller/orderDetailsController.js"></script>
 <script type="module" src="controller/orderController.js"></script>
 <script type="module" src="controller/customerController.js"></script>
 <script type="module" src="controller/itemController.js"></script>

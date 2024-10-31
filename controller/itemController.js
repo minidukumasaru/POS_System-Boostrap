@@ -87,7 +87,7 @@ $("#itemSaveButton").on("click",function (){
 
         item_array.push(item);
         Swal.fire({
-            position: "top-end",
+            position: "top-center",
             icon: "success",
             title: "Item Save Successful",
             showConfirmButton: false,

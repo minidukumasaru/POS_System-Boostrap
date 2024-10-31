@@ -24,7 +24,7 @@ const clearOrderForm = () =>{
     $('#orderItemPrice').val("");
     $('#itemQty').val("");
     $('#orderQty').val("");
-    $('#totalAmount').val("");
+    $('#totalAmount').text("");
     $('#cash').val("");
     $('#discount').val("");
     $('#balance').val("");
@@ -36,9 +36,14 @@ const clearAddItemForm = () =>{
     $('#itemQty').val("");
     $('#orderQty').val("");
 }
-const loadOrderItemTable = () => {
+const clearOrderItemTable = () => {
     $("#orderItemTableBody").empty();
-    orderItem_array.forEach((orderItem_object, index) => {
+};
+const loadOrderItemTable = (orderId) => {
+    $("#orderItemTableBody").empty();
+    let filteredItems = orderItem_array.filter(item => item.orderId === orderId);
+
+    filteredItems.forEach(orderItem_object => {
         let data = `<tr>
             <td>${orderItem_object.orderItemId}</td>
             <td>${orderItem_object.orderItemName}</td>
@@ -121,18 +126,27 @@ $("#addItemButton").on('click', function() {
         );
         orderItem_array.push(orderItem);
         console.log(orderItem_array);
-        loadOrderItemTable();
+        loadOrderItemTable(orderId);
         updateItemArray();
-        calculateOverallTotal();
+        calculateOverallTotal(orderId);
     }
 });
 
-function calculateOverallTotal() {
-    let overallTotal = orderItem_array.reduce((accumulator, item) => {
-        return accumulator + (item._total);
-    }, 0);
-    document.querySelector("#totalAmount").innerText = overallTotal;
+
+function calculateOverallTotal(orderId) {
+    // Ensure orderId is a string for matching consistency
+    orderId = String(orderId);
+
+    // Filter items with the specified orderId and sum their _total values
+    let orderTotal = orderItem_array
+        .filter(item => item.orderId === orderId)
+        .reduce((accumulator, item) => {
+            return accumulator + (item._total || 0); // Make sure _total has a numeric value or default to 0
+        }, 0);
+
+    document.querySelector("#totalAmount").innerText = orderTotal.toFixed(2); // Display result with two decimal points
 }
+
 $(document).ready(function (){
     $("#orderID").val(generateOrderId());
 })
@@ -290,8 +304,9 @@ $('#placeOrderButton').on('click',function (){
         order_array.push(order);
         clearOrderForm();
         setOrderId();
+        clearOrderItemTable();
         Swal.fire({
-            position: "top-end",
+            position: "top-center",
             icon: "success",
             title: "Place Order Successful",
             showConfirmButton: false,
@@ -317,12 +332,12 @@ function updateItemArray() {
     console.log("Quantity Ordered:", qty);
 
     // Find the item in the array
-    let item = item_array.find(item => item._itemId === item_code); // Check property name
+    let item = item_array.find(item => item._itemId === item_code);
 
     // Check if item exists
     if (item) {
-        item._Quantity = qtyOnHand - qty; // Update the quantity
-        console.log("Updated Item:", item); // Log the updated item
+        item._Quantity = qtyOnHand - qty;
+        console.log("Updated Item:", item);
     } else {
         console.error(`Item not found in itemArray for code: ${item_code}`);
     }
